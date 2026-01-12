@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <form action="/action_page.php" method="POST">
+        <label for="studentid">StudentID:</label><br>  
+        <input type="number" id="studentid" name="studentid"><br>
+
+        <label for="fullname">Full Name:</label><br>  
+        <input type="text" id="fullname" name="fullname"><br>
+
+        <label for="birthday">Birthday:</label><br>  
+        <input type="date" id="birthday" name="birthday"><br>
+
+        <label for="email">Email address</label><br>  
+        <input type="email" id="email" name="email"><br>
+
+        <label for="phone_number">Mobile Phone:</label><br> 
+        <input type="text" id="phone_number" name="phone_number"><br>
+        
+        <label for="grade">Grade Level:</label><br>  
+        <select id="grade" name="grade" required>
+          <option value="">--Select an option--</option>
+          <option value="KG">Kindergarten</option>
+          <option value="01">Grade 1</option>
+          <option value="02">Grade 2</option>
+          <option value="03">Grade 3</option>
+          <option value="04">Grade 4</option>
+          <option value="05">Grade 5</option>
+          <option value="06">Grade 6</option>
+          <option value="07">Grade 7</option>
+          <option value="08">Grade 8</option>
+          <option value="09">Grade 9</option>
+          <option value="10">Grade 10</option>
+          <option value="11">Grade 11</option>
+          <option value="12">Grade 12</option>
+          <option value="College">College</option>
+        </select><br><br>
+
+        <label>Dorm Status:</label><br>
+        <div>
+          <label for="intern">Intern:</label><br>
+          <input type="radio" id="intern" name="intern"><br>  
+        </div>
+        <div>
+          <label for="extern">Extern:</label><br>
+          <input type="radio" id="extern" name="extern"><br>   
+        </div>
+
+
+        <p>Intern / Extern: <input type="color"></p>
+        <p>Preferred Organization / Club: <input type="color"></p>
+        <p>Why do you want to join?: <input type="color"></p>
+        <p>Mobile phone: <input type="color"></p>
+        <button>Submit</button>
+    </form>
+  </body>
+</html>
