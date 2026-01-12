@@ -1,57 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <meta name="description" content="3Q Portfolio">
+    <meta name="keywords" content="3Q, Portfolio, Projects, Web Development">
+    <meta name="Erwyn Aamir M. Vibal" content="3Q">
+    <title>Club Application Form</title>
+
+    <style>
+      body {
+        background-color: #0b1f33;
+        color: #dbeafe;
+        font-family: Arial, sans-serif;
+      }
+
+      form {
+        width: 600px;
+        margin: 20px auto;
+        padding: 15px;
+        background-color: #102a44;
+      }
+
+      fieldset {
+        margin-bottom: 15px;
+        border: 1px solid #60a5fa;
+        padding: 10px;
+      }
+
+      legend {
+        font-weight: bold;
+        color: #93c5fd;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        margin-top: 5px;
+        padding: 5px;
+        background-color: #0b1f33;
+        color: #dbeafe;
+        border: 1px solid #60a5fa;
+        box-sizing: border-box;
+      }
+
+      input[type="radio"] {
+        width: auto;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #93c5fd;
+        outline: none;
+      }
+
+      .missing {
+        border: 2px solid red;
+      }
+    </style>
+
+    <script>
+      function checkEmpty(field) {
+        if (field.value === "") {
+          field.className = "missing";
+        } else {
+          field.className = "";
+        }
+      }
+
+      function confirmSubmit() {
+        return confirm("Do you want to submit the form?");
+      }
+
+      function confirmReset() {
+        return confirm("Do you want to reset the form?");
+      }
+    </script>
+  </head>
+
   <body>
-    <form action="/action_page.php" method="POST">
-        <label for="studentid">StudentID:</label><br>  
-        <input type="number" id="studentid" name="studentid"><br>
+    <form method="post" action="submit" onsubmit="return confirmSubmit()" onreset="return confirmReset()">
+      <fieldset>
+        <legend>Student Information</legend>
 
-        <label for="fullname">Full Name:</label><br>  
-        <input type="text" id="fullname" name="fullname"><br>
+        <label for="studentId">Student ID</label>
+        <input type="number" id="studentId" name="studentId" required onblur="checkEmpty(this)" />
 
-        <label for="birthday">Birthday:</label><br>  
-        <input type="date" id="birthday" name="birthday"><br>
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" required onblur="checkEmpty(this)" />
 
-        <label for="email">Email address</label><br>  
-        <input type="email" id="email" name="email"><br>
+        <label for="birthday">Birthday</label>
+        <input type="date" id="birthday" name="birthday" required onblur="checkEmpty(this)" />
 
-        <label for="phone_number">Mobile Phone:</label><br> 
-        <input type="text" id="phone_number" name="phone_number"><br>
-        
-        <label for="grade">Grade Level:</label><br>  
-        <select id="grade" name="grade" required>
-          <option value="">--Select an option--</option>
-          <option value="KG">Kindergarten</option>
-          <option value="01">Grade 1</option>
-          <option value="02">Grade 2</option>
-          <option value="03">Grade 3</option>
-          <option value="04">Grade 4</option>
-          <option value="05">Grade 5</option>
-          <option value="06">Grade 6</option>
-          <option value="07">Grade 7</option>
-          <option value="08">Grade 8</option>
-          <option value="09">Grade 9</option>
-          <option value="10">Grade 10</option>
-          <option value="11">Grade 11</option>
-          <option value="12">Grade 12</option>
-          <option value="College">College</option>
-        </select><br><br>
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required onblur="checkEmpty(this)" />
+      </fieldset>
 
-        <label>Dorm Status:</label><br>
-        <div>
-          <label for="intern">Intern:</label><br>
-          <input type="radio" id="intern" name="intern"><br>  
-        </div>
-        <div>
-          <label for="extern">Extern:</label><br>
-          <input type="radio" id="extern" name="extern"><br>   
-        </div>
+      <fieldset>
+        <legend>Application Details</legend>
 
+        <label for="mobile">Mobile Phone Number</label>
+        <input type="text" id="mobile" name="mobile" required onblur="checkEmpty(this)" />
 
-        <p>Intern / Extern: <input type="color"></p>
-        <p>Preferred Organization / Club: <input type="color"></p>
-        <p>Why do you want to join?: <input type="color"></p>
-        <p>Mobile phone: <input type="color"></p>
-        <button>Submit</button>
+        <label for="grade">Grade Level</label>
+        <select id="grade" name="grade" required onblur="checkEmpty(this)">
+          <option value="">Select Grade</option>
+          <option value="g7">Grade 7</option>
+          <option value="g8">Grade 8</option>
+          <option value="g9">Grade 9</option>
+          <option value="g10">Grade 10</option>
+          <option value="g11">Grade 11</option>
+          <option value="g12">Grade 12</option>
+        </select>
+
+        <label>Intern / Extern</label>
+        <label>
+          Intern
+          <input type="radio" name="track" value="intern" required />
+        </label>
+
+        <label>
+          Extern
+          <input type="radio" name="track" value="extern" />
+        </label>
+
+        <label for="club">Preferred Club</label>
+        <select id="club" name="club" required onblur="checkEmpty(this)">
+          <option value="">Select Club</option>
+          <option value="frisbee">Alianti</option>
+          <option value="badminton">Volant</option>
+          <option value="football">Labuyo</option>
+          <option value="swimming">Flux</option>
+          <option value="basketball">Pallastro</option>
+          <option value="photography">Exposure</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Reason For Joining</legend>
+
+        <label for="reason">Why do you want to join?</label>
+        <textarea id="reason" name="reason" required onblur="checkEmpty(this)"></textarea>
+      </fieldset>
+
+      <input type="submit" value="Submit" />
+      <input type="reset" value="Reset" />
     </form>
   </body>
 </html>
