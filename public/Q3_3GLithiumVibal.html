@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width-device-width, initial-scale=1.0" />
+    <meta name="description" content="3Q Portfolio" />
+    <meta name="keywords" content="3Q, Portfolio, Projects, Web Development" />
+    <meta name="Erwyn Aamir M. Vibal" content="3Q" />
+    <title>Club Application Form</title>
+
+    <style>
+      body {
+        background-color: #0b1f33;
+        color: #dbeafe;
+        font-family: Arial, sans-serif;
+      }
+
+      form {
+        width: 600px;
+        margin: 20px auto;
+        padding: 15px;
+        background-color: #102a44;
+      }
+
+      fieldset {
+        margin-bottom: 15px;
+        border: 1px solid #60a5fa;
+        padding: 10px;
+      }
+
+      legend {
+        font-weight: bold;
+        color: #93c5fd;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        margin-top: 5px;
+        padding: 5px;
+        background-color: #0b1f33;
+        color: #dbeafe;
+        border: 1px solid #60a5fa;
+        box-sizing: border-box;
+      }
+
+      input[type="radio"] {
+        width: auto;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #93c5fd;
+        outline: none;
+      }
+
+      .missing {
+        border: 2px solid red;
+      }
+
+      .btn {
+        margin-top: 10px;
+        padding: 10px 14px;
+        background-color: #0b1f33;
+        color: #dbeafe;
+        border: 1px solid #60a5fa;
+        cursor: pointer;
+        font-size: 14px;
+      }
+    </style>
+
+    <script>
+      function checkEmpty(field) {
+        if (field.value.trim() === "") {
+          field.className = "missing";
+        } else {
+          field.className = "";
+        }
+      }
+
+      function clearMissing() {
+        var all = document.getElementsByClassName("missing");
+        while (all.length > 0) {
+          all[0].className = "";
+        }
+      }
+
+      function submitForm(event) {
+        event.preventDefault();
+
+        var ok = confirm("Do you want to submit the form?");
+        if (!ok) return;
+
+        var form = document.getElementById("appForm");
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        var studentId = document.getElementById("studentId").value.trim();
+        var fullname = document.getElementById("fullname").value.trim();
+        var birthday = document.getElementById("birthday").value;
+        var email = document.getElementById("email").value.trim();
+
+        var mobile = document.getElementById("mobile").value.trim();
+        var grade = document.getElementById("grade").value;
+        var club = document.getElementById("club").value;
+        var reason = document.getElementById("reason").value.trim();
+
+        var track = "";
+        var intern = document.getElementById("intern");
+        var extern = document.getElementById("extern");
+        if (intern.checked) track = "intern";
+        if (extern.checked) track = "extern";
+
+        var entry = {
+          id: Date.now(),
+          studentId: studentId,
+          fullname: fullname,
+          birthday: birthday,
+          email: email,
+          mobile: mobile,
+          grade: grade,
+          track: track,
+          club: club,
+          reason: reason,
+          submittedAt: new Date().toLocaleString(),
+        };
+
+        var raw = localStorage.getItem("clubSignUps");
+        var list;
+
+        if (raw) {
+          list = JSON.parse(raw);
+        } else {
+          list = [];
+        }
+
+        list.push(entry);
+        localStorage.setItem("clubSignUps", JSON.stringify(list));
+
+        alert("Saved to localStorage!");
+        form.reset();
+        clearMissing();
+      }
+
+      function resetForm(event) {
+        var ok = confirm("Do you want to reset the form?");
+        if (!ok) {
+          event.preventDefault();
+        } else {
+          setTimeout(clearMissing, 0);
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <form id="appForm" onsubmit="submitForm(event)" onreset="resetForm(event)">
+      <fieldset>
+        <legend>Student Information</legend>
+
+        <label for="studentId">Student ID</label>
+        <input type="number" id="studentId" required onblur="checkEmpty(this)" />
+
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" required onblur="checkEmpty(this)" />
+
+        <label for="birthday">Birthday</label>
+        <input type="date" id="birthday" required onblur="checkEmpty(this)" />
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" required onblur="checkEmpty(this)" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Application Details</legend>
+
+        <label for="mobile">Mobile Phone Number</label>
+        <input type="text" id="mobile" required onblur="checkEmpty(this)" />
+
+        <label for="grade">Grade Level</label>
+        <select id="grade" required onblur="checkEmpty(this)">
+          <option value="">Select Grade</option>
+          <option value="g7">Grade 7</option>
+          <option value="g8">Grade 8</option>
+          <option value="g9">Grade 9</option>
+          <option value="g10">Grade 10</option>
+          <option value="g11">Grade 11</option>
+          <option value="g12">Grade 12</option>
+        </select>
+
+        <label>Intern / Extern</label>
+        <label><input type="radio" id="intern" name="track" value="intern" required /> Intern</label>
+        <label><input type="radio" id="extern" name="track" value="extern" /> Extern</label>
+
+        <label for="club">Preferred Club</label>
+        <select id="club" required onblur="checkEmpty(this)">
+          <option value="">Select Club</option>
+          <option value="alianti">Alianti</option>
+          <option value="volant">Volant</option>
+          <option value="labuyo">Labuyo</option>
+          <option value="flux">Flux</option>
+          <option value="pallastro">Pallastro</option>
+          <option value="exposure">Exposure</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Reason For Joining</legend>
+        <label for="reason">Why do you want to join?</label>
+        <textarea id="reason" required onblur="checkEmpty(this)"></textarea>
+      </fieldset>
+
+      <input type="submit" value="Submit" />
+      <input type="reset" value="Reset" />
+      <button type="button" class="btn" onclick="window.location.href = 'viewSignUps.html'">View Signups</button>
+    </form>
+  </body>
+</html>

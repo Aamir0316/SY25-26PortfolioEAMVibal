@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width-device-width, initial-scale=1.0" />
+    <meta name="description" content="3Q Portfolio" />
+    <meta name="keywords" content="3Q, Portfolio, Projects, Web Development" />
+    <meta name="Erwyn Aamir M. Vibal" content="3Q" />
+    <title>Club Signups</title>
+
+    <style>
+      body {
+        background-color: #0b1f33;
+        color: #dbeafe;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        width: 900px;
+        margin: 20px auto;
+        padding: 15px;
+        background-color: #102a44;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
+      a {
+        color: #93c5fd;
+        display: inline-block;
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+
+      select {
+        width: auto;
+        min-width: 220px;
+        padding: 6px;
+        background-color: #0b1f33;
+        color: #dbeafe;
+        border: 1px solid #60a5fa;
+      }
+
+      .total {
+        margin-top: 15px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 14px;
+      }
+
+      th,
+      td {
+        border: 1px solid #60a5fa;
+        padding: 6px 8px;
+        text-align: left; /* NOT CENTERED */
+      }
+
+      th {
+        background-color: #0b1f33;
+        color: #93c5fd;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: rgba(11, 31, 51, 0.6);
+      }
+
+      .message {
+        margin-top: 10px;
+        color: #93c5fd;
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="showData()">
+    <h1>Show List of Students Who Signed-Up</h1>
+    <p class="byline">by AL Mendoza</p>
+
+    <a href="Q3_3GLithiumVibal.html">Back to Signup</a>
+
+    <div class="controls">
+      <div>Select Your Club</div>
+      <select id="clubSelect" onchange="showData()">
+        <option value="ALL">-- select an option --</option>
+        <option value="alianti">Alianti</option>
+        <option value="volant">Volant</option>
+        <option value="labuyo">Labuyo</option>
+        <option value="flux">Flux</option>
+        <option value="pallastro">Pallastro</option>
+        <option value="exposure">Exposure</option>
+      </select>
+    </div>
+
+    <p class="total">Total Signup : <span id="totalCount">0</span></p>
+    <div class="msg" id="msg"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 14%">Club</th>
+          <th style="width: 10%">ID</th>
+          <th style="width: 25%">Fullname</th>
+          <th style="width: 10%">Grade</th>
+          <th style="width: 22%">Email</th>
+          <th style="width: 12%">Mobile</th>
+          <th style="width: 12%">Intern|Extern</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+
+    <script>
+      function clubLabel(val) {
+        if (val === "alianti") return "Alianti";
+        if (val === "volant") return "Volant";
+        if (val === "labuyo") return "Labuyo";
+        if (val === "flux") return "Flux";
+        if (val === "pallastro") return "Pallastro";
+        if (val === "exposure") return "Exposure";
+        return val;
+      }
+
+      function gradeLabel(val) {
+        if (!val) return "";
+        if (val[0] === "g") return "Grade " + val.substring(1);
+        return val;
+      }
+
+      function showData() {
+        var raw = localStorage.getItem("clubSignUps");
+        var list = [];
+        if (raw) list = JSON.parse(raw);
+
+        var selected = document.getElementById("clubSelect").value;
+        var tbody = document.getElementById("tbody");
+        var totalCount = document.getElementById("totalCount");
+        var msg = document.getElementById("msg");
+
+        tbody.innerHTML = "";
+        msg.innerHTML = "";
+        totalCount.innerHTML = "0";
+
+        if (list.length === 0) {
+          msg.innerHTML = "no saved sign-ups yet.";
+          return;
+        }
+
+        var total = 0;
+
+        for (var i = 0; i < list.length; i++) {
+          var show = false;
+
+          if (selected === "ALL") show = true;
+          else if (list[i].club === selected) show = true;
+
+          if (show) {
+            var tr = "<tr>";
+            tr += "<td>" + clubLabel(list[i].club) + "</td>";
+            tr += "<td class='center'>" + (list[i].studentId || "") + "</td>";
+            tr += "<td>" + (list[i].fullname || "") + "</td>";
+            tr += "<td>" + gradeLabel(list[i].grade) + "</td>";
+            tr += "<td>" + (list[i].email || "") + "</td>";
+            tr += "<td class='center'>" + (list[i].mobile || "") + "</td>";
+            tr += "<td class='center'>" + (list[i].track || "") + "</td>";
+            tr += "</tr>";
+
+            tbody.innerHTML += tr;
+            total++;
+          }
+        }
+
+        totalCount.innerHTML = String(total);
+
+        if (total === 0) {
+          msg.innerHTML = "no sign-ups for that club yet.";
+        }
+      }
+    </script>
+  </body>
+</html>
