@@ -136,19 +136,26 @@
       }
 
       function showData() {
+        // Get saved sign-ups from localStorage
         var raw = localStorage.getItem("clubSignUps");
         var list = [];
-        if (raw) list = JSON.parse(raw);
+        // If there is saved data, convert it back to an array
+        if (raw) list = JSON.parse(raw); 
 
+        // Get selected club from dropdown
         var selected = document.getElementById("clubSelect").value;
+
+        // Get table body and display elements
         var tbody = document.getElementById("tbody");
         var totalCount = document.getElementById("totalCount");
         var msg = document.getElementById("msg");
 
+        // Clears previous table rows and messages
         tbody.innerHTML = "";
         msg.innerHTML = "";
         totalCount.innerHTML = "0";
 
+        // If ever there are no sign-ups at all, it will show a message
         if (list.length === 0) {
           msg.innerHTML = "no saved sign-ups yet.";
           return;
@@ -156,6 +163,7 @@
 
         var total = 0;
 
+        // Goes through all saved sign-ups and checks whether to display or not
         for (var i = 0; i < list.length; i++) {
           var show = false;
 
@@ -178,8 +186,10 @@
           }
         }
 
+        // Updates total sign-ups count
         totalCount.innerHTML = String(total);
 
+        // Sees if no entries matched the selected club
         if (total === 0) {
           msg.innerHTML = "no sign-ups for that club yet.";
         }
