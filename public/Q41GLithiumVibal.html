@@ -88,6 +88,7 @@
           <option>Drama</option>
           <option>Horror</option>
           <option>Sci-Fi</option>
+          <option>Romance</option>
         </select>
 
         <label>Rating</label>
@@ -162,7 +163,7 @@
 
         let movies = JSON.parse(localStorage.getItem("movies")) || [];
 
-        /* JS Object structure required by rubric */
+        /* - JS Object structure required by rubric - */
 
         const newMovie = {
           title: title,
@@ -173,11 +174,11 @@
 
         movies.push(newMovie);
 
-        /* Save as a string*/
+        /* - Save as a string - */
 
         localStorage.setItem("movies", JSON.stringify(movies));
 
-        /* Reset form */
+        /* - Reset form - */
 
         document.getElementById("movieForm").reset();
 
