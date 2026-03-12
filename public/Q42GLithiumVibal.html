@@ -47,6 +47,14 @@
         cursor: pointer;
       }
 
+      .deleteBtn {
+        width: auto;
+        padding: 4px 10px;
+        margin-left: 10px;
+        background: orange;
+        font-size: 12px;
+      }
+
       /* - Star design - */
 
       .star {
@@ -112,8 +120,7 @@
     </div>
 
     <script>
-    
-    /* - Star rating - */
+      /* - Star rating - */
 
       let rating = 0;
       const stars = document.querySelectorAll(".star");
@@ -122,7 +129,7 @@
 
       stars.forEach((star) => {
         star.addEventListener("click", function () {
-          rating = this.dataset.value;
+          rating = Number(this.dataset.value);
 
           stars.forEach((s) => s.classList.remove("selected"));
 
@@ -140,13 +147,17 @@
 
         let movies = JSON.parse(localStorage.getItem("movies")) || [];
 
-        movies.forEach((movie) => {
+        movies.forEach((movie, index) => {
           let starDisplay = "★".repeat(movie.rating);
 
           let div = document.createElement("div");
           div.className = "movie";
 
-          div.innerHTML = `${movie.title} (${movie.year}) - ${movie.genre} | Rating: <span style="color:gold">${starDisplay}</span>`;
+          div.innerHTML = `
+            ${movie.title} (${movie.year}) - ${movie.genre} | Rating:
+            <span style="color:gold">${starDisplay}</span>
+            <button class="deleteBtn" onclick="deleteMovie(${index})">Delete</button>
+          `;
 
           movieList.appendChild(div);
         });
@@ -163,16 +174,31 @@
 
         let movies = JSON.parse(localStorage.getItem("movies")) || [];
 
-        /* - JS Object structure - */
+        /* - Check if the movie already exists - */
 
-        const newMovie = {
-          title: title,
-          year: year,
-          genre: genre,
-          rating: rating,
-        };
+        let existingMovie = movies.find((m) => m.title.toLowerCase() === title.toLowerCase());
 
-        movies.push(newMovie);
+        if (existingMovie) {
+          /* - Update existing movie information - */
+
+          existingMovie.year = year;
+          existingMovie.genre = genre;
+
+          /* - Average the rating if the movie already exists - */
+
+          existingMovie.rating = Math.round((existingMovie.rating + rating) / 2);
+        } else {
+          /* - JS Object structure - */
+
+          const newMovie = {
+            title: title,
+            year: year,
+            genre: genre,
+            rating: rating,
+          };
+
+          movies.push(newMovie);
+        }
 
         /* - Save as a string - */
 
@@ -185,8 +211,30 @@
         rating = 0;
         stars.forEach((s) => s.classList.remove("selected"));
 
+        /* - List movies again after updating - */
+
         loadMovies();
       });
+
+      /* - Delete movie with confirmation - */
+
+      function deleteMovie(index) {
+        let confirmDelete = confirm("Are you sure you want to delete?");
+
+        if (confirmDelete) {
+          let movies = JSON.parse(localStorage.getItem("movies")) || [];
+
+          /* - Remove movie from localStorage - */
+
+          movies.splice(index, 1);
+
+          localStorage.setItem("movies", JSON.stringify(movies));
+
+          /* - List movies again after deleting - */
+
+          loadMovies();
+        }
+      }
 
       /* - Load the movies when the page opens - */
 
