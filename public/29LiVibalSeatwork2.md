@@ -56,18 +56,21 @@
 - Add in css ```position: relative; top: 20px; left: 20px;``` to .sidebar.
 
 - Guided Question: What changed compared to the default static positioning? Try to give different values to top and left or you can change it to bottom, right.
+- The sidebar moved 20px down and 20px right but it still keeps its original space.
 
 ### Step 2 (Fixed):
 
 - Add in css ```position: fixed; bottom: 0; width: 100%;``` to .footer.
 
 - Guided Question: What happens when you scroll the page? Why does the footer behave differently from position relative?
+- When you scroll, the footer stays at the bottom of the screen because fixed is attached to the viewport and not the page.
 
 ### Step 3 (Absolute):
 
 - Add in css ```position: absolute; top: 66px; left: 200px;``` to .content.
 
 - Guided Question: What is the effect of position: absolute on an element? How is it different from fixed?
+- The content moves to an exact position which is at (top:66px, left:200px). Absolute means it's relative to the parent, while Fixed means it's relative to the screen.
 
 ### Step 4 : (Absolute)
 
@@ -87,18 +90,27 @@
 - Give .content a z-index: 1.
 
 - Guided Question: Why does the notice appear on top of the content? What happens if you swap the z‑index values?
+- This is because notice has a higher z-index of 2, meaning it will appear on top. If we were to swap them, content will cover notice.
 
 - Challenge: 
     * What changes that you have to do on the code that will position .notice box on the top right corner of the .content box? Please write the code on paper as well (both html and css on the part of .notice and .content).
-    * Try to change the position of .content to relative then to fixed. What do you observed each time?
+    * Try to change the position of .content to relative then to fixed. What do you observe each time?
     * What do you observe on about the effect of z-index on .notice and .content boxes?
+
+  - I observed that whenever it's relative, notice stays inside the content, but when it's fixed, notice moves based on screen, not content.
+
+  - I noticed that when the z-index has a higher value, it goes in front, while a lower value makes it go behind.
 
 3. Please answer the following reflection questions (15 minutes)
 
     a. Could you summarize the differences between the CSS position values (static, relative, absolute, fixed)? 
+    - For static, it results to the default, so there's no movement, for relative, it moves but still keeps space, for absolute, it's for exact positions and depends on a parent element, and for fixed, it stays on the screen.
 
     b. How does absolute positioning depend on its parent element?
+    - It follows the nearest positioned parent and if there aren't any, it uses the whole page.
 
     c. How do you differentiate sticky from fixed (you can research on sticky)?
+    - Sticky moves until a certain point, and then sticks, while fixed is already always fixed on screen.
 
     d. If you were designing a webpage for a school event, how might you use positioning to highlight important information? Please give concrete examples.
+    - If I were to design a webpage for a school event, I would probably use a fixed header for the event title and have an absolute badge for like notices that might say "Important!" or anything like that. I would also implement a sticky menu for easy navigation of the schedule, then also add relative positioning for extra layout adjusting.
